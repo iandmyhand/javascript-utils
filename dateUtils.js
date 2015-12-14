@@ -1,3 +1,7 @@
+/**
+ * usage:
+        unixTimestampFormat("1450076233", "%Y.%M.%d") == "2015.12.14"
+ */
 var unixTimestampFormat = function(unixTimestamp, formatString) {
     var date = new Date(unixTimestamp * 1000);
     function pad(value) {
