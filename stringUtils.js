@@ -8,5 +8,32 @@
  * "10two".isInteger() == false
  */
 String.prototype.isInteger = function() {
-    return this % 1 === 0;
-}
+	return this % 1 === 0;
+};
+
+/**
+ * "test".getPosition("t", 1) == 0
+ * "test".getPosition("t", 2) == 3
+ * "test".getPosition("t", 3) == -1
+ */
+String.prototype.getPosition = function(match, times) {
+	if(0 >= times) return -1;
+
+	var index = -1;
+	for(var i=0; i<times; i++) {
+		index = this.indexOf(match, index + 1);
+		if(0 > index) return -1;
+	}
+	return index;
+};
+
+/**
+ * "Title: {THIS} is {COLOR}.".replaceEach({THIS: "The Apple", COLOR: "red"}) == "Title: The Apple is red."
+ */
+String.prototype.replaceEach = function(matchs) {
+	var result = this;
+	for (index in matchs) {
+		result = (result.replace(new RegExp("{" + index + "}", "g"), matchs[index]));
+	}
+	return result;
+};
