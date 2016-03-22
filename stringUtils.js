@@ -37,3 +37,19 @@ String.prototype.replaceEach = function(matchs) {
 	}
 	return result;
 };
+
+/**
+ * Some browser does not support startsWith and endsWith function...
+ */ 
+if("undefined" === typeof(String.prototype.startsWith)) {
+    String.prototype.startsWith = function(prefix) {
+        return this.indexOf(prefix) === 0;
+    };
+}
+if("undefined" === typeof(String.prototype.endsWith)) {
+    String.prototype.endsWith = function(suffix) {
+        if (this.length < suffix.length)
+            return false;
+        return this.lastIndexOf(suffix) === this.length - suffix.length;
+    };
+}
