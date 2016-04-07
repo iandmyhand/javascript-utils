@@ -57,28 +57,31 @@ if("undefined" === typeof(String.prototype.endsWith)) {
 /**
  * Language checker.
  * Usage:
- 	langCheck('Abc', 'en'); // true
- 	langCheck('Abc*', 'en'); // false
- 	langCheck(')(', 'en'); // false
- 	langCheck('ㄱㅁㄴ', 'en'); // false
- 	langCheck('aㄲ', 'en'); // false
- 	langCheck(' ', 'en'); // false
+ 	"Abc".langCheck('en'); // true
+ 	"A b   c".langCheck('en'); // true
+ 	" ".langCheck('en'); // true
+ 	"Abc*".langCheck('en'); // false
+ 	")(".langCheck('en'); // false
+ 	"ㄱㅁㄴ".langCheck('en'); // false
+ 	"aㄲ".langCheck('en'); // false
+ 	"".langCheck('en'); // false
 
- 	langCheck('가나다', 'ko'); // true
- 	langCheck('ㄱㄴㄷ', 'ko'); // true
- 	langCheck(')(', 'ko'); // false
- 	langCheck('abc', 'ko'); // false
- 	langCheck('aㄲ', 'ko'); // false
- 	langCheck(' ', 'ko'); // false
+ 	"가나다".langCheck('ko'); // true
+ 	"ㄱㄴㄷ".langCheck('ko'); // true
+ 	"ㄱㄴ  ㄷ  ".langCheck('ko'); // true
+ 	" ".langCheck('ko'); // true
+ 	")(".langCheck('ko'); // false
+ 	"abc".langCheck('ko'); // false
+ 	"aㄲ".langCheck('ko'); // false
  */
-var langCheck = function(str, lang) {
-	if ("string" != typeof(str) || 0 >= str.length) {
+String.prototype.langCheck = function(lang) {
+	if (0 >= this.length) {
 		return false;
 	}
 	if("ko" === lang) {
-		return !/([^가-힣ㄱ-ㅎㅏ-ㅣ])/g.test(str);
+		return !/([^가-힣ㄱ-ㅎㅏ-ㅣ\s])/g.test(this);
 	} else if ("en" === lang) {
-		return !/[^A-Za-z]/g.test(str);
+		return !/[^A-Za-z\s]/g.test(this);
 	} else {
 		throw "Not supported language code.";
 	}
