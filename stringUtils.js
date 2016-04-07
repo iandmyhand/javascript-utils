@@ -53,3 +53,33 @@ if("undefined" === typeof(String.prototype.endsWith)) {
         return this.lastIndexOf(suffix) === this.length - suffix.length;
     };
 }
+
+/**
+ * Language checker.
+ * Usage:
+ 	langCheck('Abc', 'en'); // true
+ 	langCheck('Abc*', 'en'); // false
+ 	langCheck(')(', 'en'); // false
+ 	langCheck('ㄱㅁㄴ', 'en'); // false
+ 	langCheck('aㄲ', 'en'); // false
+ 	langCheck(' ', 'en'); // false
+
+ 	langCheck('가나다', 'ko'); // true
+ 	langCheck('ㄱㄴㄷ', 'ko'); // true
+ 	langCheck(')(', 'ko'); // false
+ 	langCheck('abc', 'ko'); // false
+ 	langCheck('aㄲ', 'ko'); // false
+ 	langCheck(' ', 'ko'); // false
+ */
+var langCheck = function(str, lang) {
+	if ("string" != typeof(str) || 0 >= str.length) {
+		return false;
+	}
+	if("ko" === lang) {
+		return !/([^가-힣ㄱ-ㅎㅏ-ㅣ])/g.test(str);
+	} else if ("en" === lang) {
+		return !/[^A-Za-z]/g.test(str);
+	} else {
+		throw "Not supported language code.";
+	}
+}
